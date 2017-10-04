@@ -17,4 +17,4 @@ go/main: go/main.go
 	cd go; go build main.go
 
 rust/target/debug/rust: rust/main.rs rust/Cargo.toml
-	cd rust; cargo build
+	cd rust; cargo build --release

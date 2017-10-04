@@ -77,7 +77,7 @@ def main():
         'java': ['java', 'java_hashmap/Main', '$SIZE'],
         'python': ['python', 'py/main.py', '$SIZE'],
         'go': ['go/main', '$SIZE'],
-        'rust': ['rust/target/debug/rust', '$SIZE'],
+        'rust': ['rust/target/release/rust', '$SIZE'],
     }
 
     for implementation, execution_list in implementations.items():
