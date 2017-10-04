@@ -1,0 +1,11 @@
+[package]
+name = "rust"
+version = "0.1.0"
+authors = ["Andrew Nelson <andrew2nelson@gmail.com>"]
+
+[dependencies]
+rand = "0.3"
+
+[[bin]]
+name = "rust"
+path = "main.rs"

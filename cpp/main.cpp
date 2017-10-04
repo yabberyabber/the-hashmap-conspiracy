@@ -2,7 +2,6 @@
 #include <unordered_map>
 #include <random>
 
-
 int main(int argc, char **argv) {
     if (argc != 2) {
         printf("Expected size in args");
