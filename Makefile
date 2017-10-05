@@ -8,7 +8,7 @@ clean:
 	-rm -rf rust/target
 
 cpp/Main: cpp/main.cpp
-	g++ cpp/main.cpp -std=c++11 -o cpp/Main
+	g++ -O3 cpp/main.cpp -std=c++11 -o cpp/Main
 
 java_hashmap/Main.class: java_hashmap/main.java
 	javac java_hashmap/main.java -s java_hashmap

@@ -8,11 +8,12 @@ import timeit
 from collections import namedtuple
 import statistics
 from math import log
+import numpy as np
 import matplotlib.pyplot as plt
 
 ResultRow = namedtuple("ResultRow", ["executable", "size", "low", "mid", "high"])
 
-SIZES = [4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0] #, 7.5]
+SIZES = list(np.arange(4.0, 7.5, 0.1))
 
 def test_executable(name, execution_list):
     """
@@ -22,7 +23,7 @@ def test_executable(name, execution_list):
     """
     ret = []
     print("Testing: %s" % (name,))
-    print("%s, %s, %s, %s" % ("dataset size", "20th P", "50th P", "80th P"))
+    print("%s, %s, %s, %s" % ("dataset size", "x-SD", "mean", "x+SD"))
     for size_power in SIZES:
         times = []
         for _ in range(15):
@@ -61,7 +62,9 @@ def render_plot(name, data):
 
         plt.plot([x_val, x_val, x_val], [y_low, y_med, y_high], "ro")
 
-    plt.xticks(SIZES, ["10^" + str(size) for size in SIZES])
+    ticks = [size for size in SIZES if str(size)[-1] in ['0', '5']]
+
+    plt.xticks(ticks, ["10^" + str(tick) for tick in ticks])
     plt.xlabel("Number of Insertions (log scale)")
     plt.ylabel("Time per Insertion (seconds)")
     plt.tight_layout()

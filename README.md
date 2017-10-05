@@ -24,11 +24,21 @@ For details, check out https://docs.oracle.com/javase/7/docs/api/java/util/HashM
 
 The standard go map structure uses a hash table with incremental bucket migration.  Here's a well-documented bit of source code: https://golang.org/src/runtime/hashmap.go.
 
+### Python dictionary
+
+Python's dictionaries are actually implemented with a pretty basic hashmap.  Yes, that's right, the primative `{}` is a hash map.  Guido is very invested in this constant-time conspiracy.  
+
+### Rust
+
+Rust's standard library comes with `stl::collections::HashMap` as a hash map implementation.  When I first tried rust, I saw terrible performance that seems to be big Oh of sin(N) which doesn't make any sense.  Since then, I re-tried it by building with `cargo build --release` and found that the performance became extraordinary.  Rust and go both have fantastically fast hashmaps in the standard libraries.  
+
 ## Results
 
-This is what `driver.py` outputted when run on my intel quad core 2.4GHz i5-6300U CPU with 12GB of mempory running ubuntu 16.04.  There will be graphs below.
+This is what `driver.py` outputted when run on my intel quad core 2.4GHz i5-6300U CPU with 12GB of memory running ubuntu 16.04.  There will be graphs below.
 
-Please do not use these numbres to compare languages.  I'm not posting this data so that someone can claim that rust is faster than go, but so that we can observe the trends in time-per-operation as the sizes of the dataset grows across different implementations.  
+Please do not use these numbers to compare languages.  I'm not posting this data so that someone can claim that rust is faster than go, but so that we can observe the trends in time-per-operation as the sizes of the dataset grows across different implementations.  
+
+For the graphs below, you'll notice that the smaller data-sets take a huge amount of time to insert per element.  This is almost certainly because of the overhead of starting the process and loading the code into memory.   This is especially true of the java.util.HashMap benchmark which has to load up the entirety of the JVM before it can even begin to execute main (I'm kidding of course).
 
 Testing: go
 dataset size, 20th P, 50th P, 80th P
@@ -78,7 +88,10 @@ dataset size, 20th P, 50th P, 80th P
 
 ### cpp std::unordered_map
 
+This is my favorite graph because it's the only one that demonstrates my point.  You should notice that in the long run, it looks like this data is linear.  One might be tempted to call this insertion operation big Oh of N, but don't forget that the x axis is logarithmatized.  I haven't thought through this yet but I'll make some helpful graphs tonight to help explain what graphs look like as you change the axes.
+
 ![graph for c++](/cpp.png?raw=true "C++ Performance")
+
 
 ### go
 
